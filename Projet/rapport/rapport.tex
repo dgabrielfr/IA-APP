@@ -1,0 +1,68 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = fr-classique
+%% NOTES :
+% Pour reindenter le fichier :
+% latexindent rapport_TER.tex -o rapport_TER.tex
+
+
+\documentclass{report}
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{tabu}
+
+\usepackage{polyglossia}
+\setmainlanguage{french}
+
+
+\usepackage{float}
+
+%\usepackage{breqn}
+\usepackage{amsmath}
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{minted}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\title{Rapport UE Apprentissage statistique : Réconnaissance d'images}
+\author{Nicolas \textsc{Leclerc} \and Damien \textsc{Gabriel} \and Mohammed \textsc{Boutahar}}
+\date{M1 Informatique 2015-2016}
+
+\begin{document}
+
+{\let\newpage\relax\maketitle}
+
+\begin{tikzpicture}[remember picture, overlay]
+%\node[anchor=north east, inner sep=20pt] at (current page.north east) {\includegraphics[width=2cm]{images/logo_saclay.png}};
+
+\node[anchor=north west, inner sep=20pt](upsud) at (current page.north west) {\includegraphics[width=2cm]{images/logo_upsud.png}};
+%\node[below = -1cm of upsud] {\includegraphics[width=2cm]{images/logo_LIMSI.png}};
+
+%\node[anchor=north east, inner sep=20pt] at (current page.north east) {\includegraphics[width=2cm]{images/logo_LIMSI.png}};
+\end{tikzpicture}
+
+\tableofcontents
+
+%% Introduction
+\include{introduction}
+
+%% CIFAR
+\include{CIFAR-10}
+
+\include{methode_naive}
+
+\include{methode_coates}
+
+%% Bibliographie
+
+% TODO : ajouter les références des articles sur les formulations
+
+\bibliographystyle{plain}
+\bibliography{biblio/biblio_IA-APP}
+
+\include{annexes}
+
+\end{document}
+

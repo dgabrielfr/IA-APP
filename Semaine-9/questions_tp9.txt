@@ -1,0 +1,5 @@
+1.
+ Quels sont les paramètres et les hyper-paramètres de la méthode pro-
+posée ? Pourquoi distingue-t-on ces deux types de paramètres.
+
+distance entre les données et l'hyperplan séparateur. C

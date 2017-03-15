@@ -1,0 +1,29 @@
+\chapter{CIFAR-10}
+
+
+La base CIFAR-10 est une base d'images de petites taille contenant 60000 images de 32 * 32 pixels. Ces images sont réparties dans 10 classes (avions, voiture, oiseau, chat, biche, chien, grenouille, cheval, bateau et camion), chacune contenant 6000 images.
+
+Il y a 6 lots de données répartis en 5 d'apprentissage et 1 de test.
+
+Le lot de test contient 10000 images avec 1000 images sélectionnées dans chaque classe. Les lots d'entrainement contiennent le reste.
+
+Il n'existe pas de recouvrement entre les classes, elles sont mutuellement exclusives.
+
+
+Les données peuvent être récupérées sous différents format. Dans le cadre d'une utilisation avec \texttt{python}, on utilisera des fichiers produits par cPikle, qui permettent d'obtenir un dictionnaire de la forme :
+
+\begin{itemize}
+\item[clé : data] 10000x3072 d'entier non signés 8 bit (0-255). Chaque ligne contient une image 32 * 32 pixels. Les canaux sont ensuite dans l'ordre R (rouge), G (vert), B (bleu), chaque canal a 1024 (32 * 32) éléments. Les images sont stockées par lignes.
+
+\item[clé : label] 10000 contient un nombre de 0 à 9 permettant de connaitre la classe des 10000 images.
+\end{itemize}
+
+La page \url{http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html} contient les meilleurs résultats obtenu sur la base CIFAR-10. 
+
+Actuellement le taux de reconnaissance atteint 96.53~\% \cite{DBLP:journals/corr/Graham14a}.
+
+Il est très peu probable que nous atteignons un tel taux de reconnaissance. En effet, ceux-ci suppose des algorithmes complexes avec des réseaux de neurones  comme dans \cite{DBLP:journals/corr/Graham14a}. Le temps limité ne nous permettra pas d'implémenter et de trouver les meilleurs paramètres pour obtenir les meilleurs résultats.
+
+Un autre problème sera la puissance de calcul disponible qui ne permettront pas de traiter un très grand nombre d'images d'apprentissage.
+
+

@@ -1,0 +1,170 @@
+\chapter{Méthode naïve}
+
+Dans un premier temps, on utilisera comme caractéristique les valeurs de chaque pixel.
+
+On peut utiliser comme valeur des pixels la «norme» des composantes R, G, B
+avec~:
+
+\begin{itemize}
+\item R : la composante rouge de l'image
+\item G : la composante verte
+\item B : la composante bleu
+\end{itemize}
+
+Avec cette définition de la valeur, $val$ des pixels, celle-ci peut s'écrire :
+
+\begin{equation}
+val = \sqrt{R^{2} + G^{2} + B^{2}}
+\end{equation}
+
+Ci-dessous on présente les résultats obtenus en utilisant la totalité du \verb|data_batch1| et du \verb|test_batch|.
+
+Plusieurs cas on été réalisés :
+\begin{itemize}
+\item Le perceptron non moyenné et sans shuffle sur 100 périodes
+\item Le perceptron non moyenné avec shuffle sur 100 périodes
+\item Le perceptron moyenné avec shuffle sur 100 périodes
+\item La k-moyenne sur 30 périodes
+\end{itemize}
+
+\section{Perceptron}
+
+Le perceptron est un séparateur linéaire permettant de classifier avec supervision de manière binaires des images.
+
+Pour une entrée $x$ on renvoit soit 0 ou 1 (ou -1 et 1) selon la valeur du produit scalaire entre les poids $w$ et le vecteur d'entrée  est supérieur à un seuil $b$.
+
+\begin{itemize}
+\item si $w.x + b > 0$ : $f(x) = 1$ 
+
+\item sinon    $f(x) = 0$ 
+
+\end{itemize}
+
+Si la valeur retournée est positive alors on considère que x appartient a cette classe.
+
+Si la valeur retournée est nulle alors x n'appartient pas à la classe considéré.
+
+Dans le cas d'un perceptron multiclasse, on utilise un perceptron pour chaque classe.
+
+Dans un premier temps on fait «apprendre» à l'algorithme à reconnaitre les images dont on connait déjà la classe. On procède de manière itérative en déterminant les poids associé à un vecteur de caractéristique afin de minimiser les erreurs de prédiction. Les vecteurs de caractéristiques sont créés de façon à représenter les objets de l'on manipule. Par exemple, dans le cas d'image, on peut utiliser des valeurs associée aux pixels telle que la norme avec différents regroupements.
+
+
+\subsection{Non moyenné et sans shuffle}
+
+La figure ci-dessous représente, pour chaque classe, le nombre d'image mal reconnues en fonction de la période.
+
+Chaque classe contient 1000 images, ce qui nous permet de comparer directement le taux de reconnaissance de chaque classe.
+
+Globalement, le nombre d'erreur est important et même dans le cas des images représentant des avions et des bateaux, qui sont les classes les mieux reconnues, on n'a qu'environ 300 images reconnues correctement. Soit un taux de reconnaissance d'environ 30 \%.
+
+On peut penser que la faible variabilité de la couleur du ciel et de la mer, dans le cas des images d'avions et de bateau, permet de les identifier facilement, une fois qu'un l'on connait la couleur de base. Ainsi un processus basé sur l'utilisation de couleur (par opposition à une détection de contour) est elle suffisante. Au contraire, on peut penser, pour les classes mal reconnues, que la variabilité des couleurs est trop forte pour pouvoir identifier correctement une image uniquement à l'aide de la norme euclidienne des composantes R,G,B des pixels.
+
+De même la composition des images ne sera pas identique. Autant un avion ou un bateau sera très souvent sur un fond relativement uni, autant une photo de la classe cerf aura pour fond une forêt avec de fortes variations de couleur autour du cerf. 
+
+% TODO insérer image
+
+On observe une convergence de chaque classe bien que pour certaines le taux de d'images mal reconnues soit croissant. En effet il se peut que l'algorithme prédisait trop souvent ce type d'image ce qui implique qu'il se trompait souvent sur les autres classes et non sur la classe prédite.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{images/Perceptron_multiclasse_non_moyenne.png}
+\caption{Nombre d'images mal reconnues pour chaque période et pour chaque classe pour le perceptron non moyenné et sans shuffle}
+\end{center}
+\end{figure}
+
+La figure suivante représente le taux d'erreur global pour les différentes périodes.
+Au cours des période le taux d'erreur global diminue et tend à se stabiliser bien que lentement. Il reste en dessus du taux sur l'apprentissage puisque les jeux de données sont distincts.
+
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{images/erreur_Perceptron_multiclasse_non_moyenne.png}
+\caption{Taux d'erreur global, perceptron non moyenné sans shuffle}
+\end{figure}
+
+
+\subsection{Non moyenné avec shuffle}
+
+La figure \ref{fig:perceptron-non-moyenne-shuffle} représente le nombre d'images mal reconnues, pour chaque classe au cours des différentes périodes.
+L'atout du shuffle est de minimiser le poids du ou des dernières itérations de l'apprentissage par une(des) image(s) trop singulières. Les résultats sont sensiblement meilleur bien que très variables car les images de fin d'apprentissage varient elles aussi.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{images/Perceptron_multiclasse_non_moyenne_shuffle.png}
+\caption{Nombre d'images mal reconnues pour chaque période et pour chaque classe pour le perceptron non moyenné avec shuffle}
+\label{fig:perceptron-non-moyenne-shuffle}
+\end{center}
+\end{figure}
+
+La figure \ref{fig:erreur-perceptron-non-moyenne-shuffle} représente le taux d'erreur global pour les différentes périodes.
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=\textwidth]{images/erreur_Perceptron_multiclasse_non_moyenne_shuffle.png}
+\caption{Taux d'erreur global, perceptron non moyenné avec shuffle}
+\label{fig:erreur-perceptron-non-moyenne-shuffle}
+\end{center}
+\end{figure}
+
+\subsection{Moyenné avec shuffle}
+
+La figure \ref{fig:perceptron-moyenne-shuffle} représente le nombre d'images mal reconnues, pour chaque classe au cours des différentes périodes.
+Afin de supprimer la variantion trop important apporté par le suffle, nous utilisons un perceptron moyenné. Cela permet d'ammortir les changements de modèles du perceptron lors d'images trop singulières.
+
+\begin{figure}[H]
+\begin{center}
+
+
+\includegraphics[width=\textwidth]{images/Perceptron_multiclasse__moyenne_shuffle.png}
+\caption{Nombre d'images mal reconnues pour chaque période et pour chaque classe pour le perceptron moyenné avec shuffle}
+\label{fig:perceptron-moyenne-shuffle}
+\end{center}
+\end{figure}
+
+La figure \ref{fig:erreur-perceptron-moyenne-shuffle} représente le taux d'erreur global pour les différentes périodes.
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=\textwidth]{images/erreur_Perceptron_multiclasse_moyenne_shuffle.png}
+\caption{Taux d'erreur globale, perceptron moyenné avec shuffle}
+\label{fig:erreur-perceptron-moyenne-shuffle}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.4\textwidth]{images/avion_1.png}
+\includegraphics[width=0.4\textwidth]{images/avion_2.png}
+\caption{Deux images de la classe «airplane» : noter la composition homogène de la partie supérieure de l'image. De même le ciel ne présente pas une grande différence de teinte}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.4\textwidth]{images/deer_1.png}
+\includegraphics[width=0.4\textwidth]{images/deer_2.png}
+\caption{Deux images de la classe «deer» : noter la grande différence de couleur de fond entre les deux images}
+\end{center}
+\end{figure}
+
+\subsection{K-moyennes}
+L'algorithme des k-moyennes n'étant pas supervisé les résultats obtenus ne permettent pas de classer les images. La prédiction est loin d'être satisfaisante (près de 90 \% de taux d'erreur).
+On peut cependant améliorer ses performances avec des centroïdes initiaux bien choisis. Malheureusement, avec notre choix de distance basée sur les valeurs de pixel, ainsi que les données des images non traitées, il n'est pas possible de créer des centroïdes représentatifs d'une classe.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{images/k-moyennes.png}
+\caption{Nombre d'images mal reconnues pour chaque période et pour chaque classe pour la k-moyenne}
+\label{fig:k_moyenne}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{images/erreur_k_moyenne.png}
+\caption{Taux d'erreur globale pour la k-moyenne en fonction de la période}
+\label{fig:erreur-k-moyenne}
+\end{center}
+\end{figure}

@@ -1,0 +1,25 @@
+\chapter{Apprentissage de caractéritiques}
+
+L'apprentissage de l'approche naïve (valeur de pixels) ne permet pas d'extraire les caractéristiques d'une image. L'extraction de caractéristique est un important pas dans l'apprentissage afin de mieux classifier les images par la suite.
+
+Adam Coates, Honglak Lee et Andrew Y. Ng font part de leur méthode d'extraction de caractéristiques dans leur arcticle « An Analysis of Single-Layer Networks in Unsupervised Feature Learning » \cite{coates2011analysis}. La méthode repose sur les étapes suivantes :
+
+\begin{itemize}
+
+\item Extraire des patchs de chaque image du corpus d'apprentissage.
+	\item Collecter l'ensemble des patchs.
+\item Appliquer une étape de prétraitement sur les patchs (normaliser et réorganiser les données)
+	\item Appliquer un algorithme non supervisé tel que le k-moyenne sur les patchs afin d'en extraire des caractéristiques.
+	\item Organiser les patchs selon un vecteur de caractéristiques.
+	\item Appliquer un algorithme d'apprentissage.
+	\item Extraire de même des patchs, les collecter, les pré-traiter, et les organiser selon un vecteur de caractéristiques pour les images du corpus de test.
+	\item Appliquer un algorithme de classification.
+
+	\end{itemize}
+
+	Nous avons donc procédé tel quel avec un nombre de patchs égal à quatre. Afin d'extraire des caractéristiques nous utilisons un algorithme de k-moyenne. Ensuite pour la phase d'apprentissage et de classification nous utilisons SVC (Support Vector Classification) , un algorithme supervisé.
+
+	Il faut noter que les problèmes de performances qu’entraîne le pré traitement est notable mais est aussi une étape fondamentale dans la méthode.
+
+	Comme dit dans le k-moyenne, l'algorithme est très sensible à l'image référence de départ pour chaque classe. Cela donne des résultats très aléatoires. On a donc utilisé un shuffle afin d'observer les différents résultats pouvant être obtenus.
+	Cette approche est cependant assez satisfaisante bien que les performances ne dépassent pas 70 \% de reconnaissance. En effet le faible nombre de patchs utilisés ne permet pas de capturer assez de caractéristiques.

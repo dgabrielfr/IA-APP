@@ -1,0 +1,25 @@
+% Encoding: UTF-8
+
+@Article{DBLP:journals/corr/Graham14a,
+  author =    {Benjamin Graham},
+  title =     {Fractional Max-Pooling},
+  journal =   {CoRR},
+  year =      {2014},
+  volume =    {abs/1412.6071},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  biburl =    {http://dblp.uni-trier.de/rec/bib/journals/corr/Graham14a},
+  timestamp = {Thu, 01 Jan 2015 19:51:08 +0100},
+  url =       {http://arxiv.org/abs/1412.6071}
+}
+
+@Article{LeeGallagherTu2015,
+  author =         {Chen-Yu Lee and Patrick W. Gallagher and Zhuowen Tu},
+  title =          {Generalizing Pooling Functions in Convolutional Neural Networks: Mixed, Gated, and Tree},
+  year =           {2015},
+  month =          sep,
+  __markedentry =  {[dgabriel:6]},
+  abstract =       {We seek to improve deep neural networks by generalizing the pooling operations that play a central role in current architectures. We pursue a careful exploration of approaches to allow pooling to learn and to adapt to complex and variable patterns. The two primary directions lie in (1) learning a pooling function via (two strategies of) combining of max and average pooling, and (2) learning a pooling function in the form of a tree-structured fusion of pooling filters that are themselves learned. In our experiments every generalized pooling operation we explore improves performance when used in place of average or max pooling. We experimentally demonstrate that the proposed pooling operations provide a boost in invariance properties relative to conventional pooling and set the state of the art on several widely adopted benchmark datasets; they are also easy to implement, and can be applied within various deep neural network architectures. These benefits come with only a light increase in computational overhead during training and a very modest increase in the number of model parameters.},
+  comments =       {Patent disclosure, UCSD Docket No. SD2015-184, "Forest Convolutional Neural Network", filed on March 4, 2015. UCSD Docket No. SD2016-053, "Generalizing Pooling Functions in Convolutional Neural Network", filed on Sept 23, 2015},
+  eprint =         {1509.08985},
+  oai2identifier = {1509.08985}
+}
